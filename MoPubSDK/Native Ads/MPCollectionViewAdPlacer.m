@@ -115,6 +115,11 @@
 
 - (void)adPlacer:(MPStreamAdPlacer *)adPlacer didLoadAdAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (!(indexPath.section<[self.collectionView numberOfSections] &&
+        indexPath.row<[self.collectionView numberOfItemsInSection:indexPath.section])) {
+        return;
+    }
+
     BOOL animationsWereEnabled = [UIView areAnimationsEnabled];
     //We only want to enable animations if the index path is before or within our visible cells
     BOOL animationsEnabled = ([(NSIndexPath *)[self.collectionView.indexPathsForVisibleItems lastObject] compare:indexPath] != NSOrderedAscending) && animationsWereEnabled;
